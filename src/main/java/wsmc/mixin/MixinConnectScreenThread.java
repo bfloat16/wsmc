@@ -27,8 +27,7 @@ public class MixinConnectScreenThread {
 		this.serverAddress = serverAddress;
 	}
 
-	@Inject(method = "run", require = 1, at = @At(value = "INVOKE",
-			target = "Lnet/minecraft/network/Connection;connect(Ljava/net/InetSocketAddress;ZLnet/minecraft/network/Connection;)Lio/netty/channel/ChannelFuture;"))
+	@Inject(method = "run", require = 1, at = @At(value = "INVOKE", target = "Lnet/minecraft/network/Connection;connect(Ljava/net/InetSocketAddress;ZLnet/minecraft/network/Connection;)Lio/netty/channel/ChannelFuture;"))
 	public void beforeCallConnect(CallbackInfo callback, @Local(ordinal = 0, argsOnly = false) Connection connection) {
 		IWebSocketServerAddress wsAddress = IWebSocketServerAddress.from(serverAddress);
 		IConnectionEx con = (IConnectionEx) connection;

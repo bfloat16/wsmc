@@ -23,7 +23,8 @@ public class MixinConnectScreen {
 	static Logger LOGGER;
 
 	@Inject(at = @At("HEAD"), method = "connect", require = 1, cancellable = true)
-	private void connect(CallbackInfo callback, @Local(ordinal = 0, argsOnly = true) final ServerAddress serverAddress) {
+	private void connect(CallbackInfo callback,
+			@Local(ordinal = 0, argsOnly = true) final ServerAddress serverAddress) {
 		if (!IWebSocketServerAddress.from(serverAddress).isVanilla())
 			LOGGER.info("Connecting to Websocket server: " + serverAddress.toString());
 	}

@@ -17,7 +17,7 @@ import wsmc.HttpGetSniffer;
 import wsmc.IConnectionEx;
 
 @Debug(export = true)
-@Mixin(targets="net.minecraft.server.network.ServerConnectionListener$1")
+@Mixin(targets = "net.minecraft.server.network.ServerConnectionListener$1")
 public class MixinServerConnectionListener {
 	@Inject(at = @At("RETURN"), method = "initChannel", require = 1)
 	private void initChannel(CallbackInfo callback,

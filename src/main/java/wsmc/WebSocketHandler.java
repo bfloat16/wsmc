@@ -39,7 +39,8 @@ public abstract class WebSocketHandler extends ChannelDuplexHandler {
 		byteArray.resetReaderIndex();
 	}
 
-	protected abstract void sendWsFrame(ChannelHandlerContext ctx, WebSocketFrame frame, ChannelPromise promise) throws Exception;
+	protected abstract void sendWsFrame(ChannelHandlerContext ctx, WebSocketFrame frame, ChannelPromise promise)
+			throws Exception;
 
 	@Override
 	public final void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
@@ -47,7 +48,7 @@ public abstract class WebSocketHandler extends ChannelDuplexHandler {
 			ByteBuf byteBuf = (ByteBuf) msg;
 
 			if (WSMC.debug()) {
-				WSMC.debug(this.outboundPrefix + " (" +byteBuf.readableBytes() + "):");
+				WSMC.debug(this.outboundPrefix + " (" + byteBuf.readableBytes() + "):");
 				dumpByteArray(byteBuf);
 			}
 
@@ -73,7 +74,7 @@ public abstract class WebSocketHandler extends ChannelDuplexHandler {
 				ctx.fireChannelRead(content);
 			} else if (msg instanceof CloseWebSocketFrame) {
 				WSMC.debug("CloseWebSocketFrame (" + ((CloseWebSocketFrame) msg).statusCode()
-							+ ") received : " + ((CloseWebSocketFrame) msg).reasonText());
+						+ ") received : " + ((CloseWebSocketFrame) msg).reasonText());
 			} else {
 				WSMC.debug("Unsupported WebSocketFrame: " + msg.getClass().getName());
 			}
@@ -86,7 +87,8 @@ public abstract class WebSocketHandler extends ChannelDuplexHandler {
 		}
 
 		@Override
-		protected void sendWsFrame(ChannelHandlerContext ctx, WebSocketFrame frame, ChannelPromise promise) throws Exception {
+		protected void sendWsFrame(ChannelHandlerContext ctx, WebSocketFrame frame, ChannelPromise promise)
+				throws Exception {
 			ctx.write(frame, promise);
 		}
 	}

@@ -51,16 +51,16 @@ public class WebSocketClientHandler extends WebSocketHandler {
 
 		try {
 			maxFramePayloadLength = Integer.parseInt(WebSocketClientHandler.maxFramePayloadLength);
-		} catch (Exception e){
+		} catch (Exception e) {
 			WSMC.debug("Unable to parse maxFramePayloadLength, value: " + WebSocketClientHandler.maxFramePayloadLength);
 		}
 
 		DefaultHttpHeaders headers = new DefaultHttpHeaders();
 		headers.set("Host", httpHostname);
 
-        // Connect with V13 (RFC 6455 aka HyBi-17). You can change it to V08 or V00.
-        // If you change it to V00, ping is not supported and remember to change
-        // HttpResponseDecoder to WebSocketHttpResponseDecoder in the pipeline.
+		// Connect with V13 (RFC 6455 aka HyBi-17). You can change it to V08 or V00.
+		// If you change it to V00, ping is not supported and remember to change
+		// HttpResponseDecoder to WebSocketHttpResponseDecoder in the pipeline.
 		this.handshaker = WebSocketClientHandshakerFactory.newHandshaker(uri,
 				WebSocketVersion.V13, null, true, headers, maxFramePayloadLength);
 	}
@@ -73,8 +73,9 @@ public class WebSocketClientHandler extends WebSocketHandler {
 			WSMC.info("Connecting to WebSocket Server:\n" + connInfo.toString());
 
 			pipeline.addAfter("timeout", "WsmcHttpClient", new HttpClientCodec());
-			pipeline.addAfter("WsmcHttpClient", "WsmcHttpAggregator", new HttpObjectAggregator(8192*4));
-			pipeline.addAfter("WsmcHttpAggregator", "WsmcCompressionHandler", WebSocketClientCompressionHandler.INSTANCE);
+			pipeline.addAfter("WsmcHttpClient", "WsmcHttpAggregator", new HttpObjectAggregator(8192 * 4));
+			pipeline.addAfter("WsmcHttpAggregator", "WsmcCompressionHandler",
+					WebSocketClientCompressionHandler.INSTANCE);
 			pipeline.addAfter("WsmcCompressionHandler", "WsmcWebSocketClientHandler", handler);
 
 			if ("wss".equalsIgnoreCase(connInfo.uri.getScheme())) {
@@ -155,7 +156,8 @@ public class WebSocketClientHandler extends WebSocketHandler {
 	}
 
 	@Override
-	protected void sendWsFrame(ChannelHandlerContext ctx, WebSocketFrame frame, ChannelPromise promise) throws Exception {
+	protected void sendWsFrame(ChannelHandlerContext ctx, WebSocketFrame frame, ChannelPromise promise)
+			throws Exception {
 		if (handshakeFuture.isSuccess()) {
 			ctx.write(frame, promise);
 		} else {

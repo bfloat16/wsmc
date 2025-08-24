@@ -75,7 +75,8 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
 				}
 
 				// Adding new handler to the existing pipeline to handle WebSocket Messages
-				ctx.pipeline().replace(this, "WsmcWebSocketServerHandler", new WebSocketHandler.WebSocketServerHandler());
+				ctx.pipeline().replace(this, "WsmcWebSocketServerHandler",
+						new WebSocketHandler.WebSocketServerHandler());
 
 				WSMC.debug("Opened Channel: " + ctx.channel());
 
@@ -83,14 +84,15 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
 
 				try {
 					maxFramePayloadLength = Integer.parseInt(HttpServerHandler.maxFramePayloadLength);
-				} catch (Exception e){
-					WSMC.debug("Unable to parse maxFramePayloadLength, value: " + HttpServerHandler.maxFramePayloadLength);
+				} catch (Exception e) {
+					WSMC.debug(
+							"Unable to parse maxFramePayloadLength, value: " + HttpServerHandler.maxFramePayloadLength);
 				}
 
 				System.out.println("maxFramePayloadLength: " + maxFramePayloadLength);
 				// Do the Handshake to upgrade connection from HTTP to WebSocket protocol
-				WebSocketServerHandshakerFactory wsFactory =
-							new WebSocketServerHandshakerFactory(url, null, true, maxFramePayloadLength);
+				WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(url, null, true,
+						maxFramePayloadLength);
 				WebSocketServerHandshaker handshaker = wsFactory.newHandshaker(httpRequest);
 
 				if (handshaker == null) {
@@ -99,10 +101,11 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
 				} else {
 					WSMC.debug("Handshaking starts...");
 					handshaker.handshake(ctx.channel(), httpRequest)
-						.addListener((future) -> WSMC.debug("Handshake is done"));
+							.addListener((future) -> WSMC.debug("Handshake is done"));
 				}
 
-				// Here we assume that the server never actively sends anything before it receives anything from the client.
+				// Here we assume that the server never actively sends anything before it
+				// receives anything from the client.
 			} else {
 				// Not a WebSocket upgrade request, send a default HTTP response
 				DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,

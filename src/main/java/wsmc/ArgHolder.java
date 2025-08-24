@@ -1,8 +1,7 @@
 package wsmc;
 
 public final class ArgHolder<T> {
-	private final ThreadLocal<T> wsAddress =
-			ThreadLocal.withInitial(() -> null);
+	private final ThreadLocal<T> wsAddress = ThreadLocal.withInitial(() -> null);
 
 	private final boolean nullable;
 
@@ -28,6 +27,7 @@ public final class ArgHolder<T> {
 
 	/**
 	 * Get the value
+	 * 
 	 * @return the value set previously
 	 */
 	public T peek() {
@@ -42,6 +42,7 @@ public final class ArgHolder<T> {
 
 	/**
 	 * Get the value and then reset the context.
+	 * 
 	 * @return the value set previously
 	 */
 	public T pop() {

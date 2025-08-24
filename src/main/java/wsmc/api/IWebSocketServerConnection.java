@@ -7,12 +7,15 @@ import net.minecraft.network.Connection;
 
 /**
  * This interface is mixined to {@link net.minecraft.network.Connection}.
- * So you can cast between {@link net.minecraft.network.Connection} and this interface.
+ * So you can cast between {@link net.minecraft.network.Connection} and this
+ * interface.
  * <p>
- * On the server side, you can use this interface to retrieve the HTTP header during the
+ * On the server side, you can use this interface to retrieve the HTTP header
+ * during the
  * WebSocket handshake.
  * <p>
  * For instance, the server can get the real client IP from the HTTP header:
+ * 
  * <pre>
  * MinecraftServer server = ...;
  * // Go through all established connections
@@ -26,11 +29,13 @@ import net.minecraft.network.Connection;
  * 	}
  * }
  * </pre>
+ * 
  * This is extremely useful if the client connects to the server via a proxy.
  */
 public interface IWebSocketServerConnection {
 	/**
 	 * Only available on the server side.
+	 * 
 	 * @return the http request of the WebSocket handshake.
 	 */
 	@Nullable
@@ -38,6 +43,6 @@ public interface IWebSocketServerConnection {
 
 	@Nullable
 	public static IWebSocketServerConnection of(Connection connection) {
-		return (IWebSocketServerConnection)(Object)connection;
+		return (IWebSocketServerConnection) (Object) connection;
 	}
 }

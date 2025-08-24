@@ -18,6 +18,7 @@ public interface IWebSocketServerAddress {
 
 	/**
 	 * Unlike {@link ServerAddress#getHost()}, this function:
+	 * 
 	 * @return the raw host name that may contain non-ascii characters.
 	 */
 	String getRawHost();

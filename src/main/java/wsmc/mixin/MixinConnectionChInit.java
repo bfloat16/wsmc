@@ -17,9 +17,11 @@ import wsmc.IWebSocketServerAddress;
 import wsmc.client.WebSocketClientHandler;
 
 /**
- * This Mixin patches the {@link io.netty.channel.ChannelInitializer} inner class
+ * This Mixin patches the {@link io.netty.channel.ChannelInitializer} inner
+ * class
  * in {@link net.minecraft.network.Connection}.
- * It injects additional handlers into the pipeline when the client connects to a server.
+ * It injects additional handlers into the pipeline when the client connects to
+ * a server.
  */
 @Debug(export = true)
 @Mixin(targets = "net.minecraft.network.Connection$1")

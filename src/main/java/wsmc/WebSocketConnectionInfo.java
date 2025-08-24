@@ -105,13 +105,18 @@ public class WebSocketConnectionInfo {
 
 	/**
 	 * syntax: (wss|ws)://sni.com:host.com@ip.ip.ip.ip[:port][/path]
+	 * or alternative syntax: (wss|ws)@@sni.com:host.com@ip.ip.ip.ip[:port]@path
 	 * @param uriString
 	 * @return null if uriString is not a valid WebSocket Uri (including vanilla TCP).
 	 */
 	@Nullable
 	public static ServerAddress fromWsUri(String uriString) {
 		try {
-			URI uri = new URI(uriString);
+			// Replace custom syntax with standard URI format
+			// First replace @@ with ://, then replace remaining @ with /
+			String normalizedUriString = uriString.replace("@@", "://").replace("@", "/");
+			
+			URI uri = new URI(normalizedUriString);
 
 			String scheme = uri.getScheme();
 			String hostname = uri.getHost();
